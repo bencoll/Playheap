@@ -10,7 +10,7 @@ import {
 } from '@dnd-kit/core';
 import type { Game, ColumnId } from '../../types';
 import { COLUMN_CONFIG } from '../../types';
-import { useGameLibrary } from '../../hooks/useGameLibrary';
+import { useGameLibrary } from '../../contexts/GameLibraryContext';
 import { Column } from '../Column';
 import { GameCard } from '../GameCard';
 import styles from './Board.module.css';

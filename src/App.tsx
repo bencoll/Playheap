@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Header } from './components/Header';
 import { Board } from './components/Board';
 import { AddGameForm } from './components/AddGameForm';
-import { useGameLibrary } from './hooks/useGameLibrary';
+import { useGameLibrary } from './contexts/GameLibraryContext';
 import type { Game, Platform } from './types';
 import styles from './App.module.css';
 
