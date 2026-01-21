@@ -63,7 +63,7 @@ export function AddGameForm({ isOpen, onClose, onSubmit, editingGame, onUpdate }
             {editingGame ? 'Edit Game' : 'Add Game'}
           </h2>
           <button className={styles.closeButton} onClick={onClose} aria-label="Close">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className={styles.closeIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -80,7 +80,7 @@ export function AddGameForm({ isOpen, onClose, onSubmit, editingGame, onUpdate }
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className={styles.input}
-              placeholder="Enter game title"
+              placeholder="Enter game title..."
               autoFocus
             />
           </div>
@@ -90,20 +90,10 @@ export function AddGameForm({ isOpen, onClose, onSubmit, editingGame, onUpdate }
               {PLATFORMS.map((platform) => (
                 <label
                   key={platform.id}
+                  data-platform={platform.id}
                   className={`${styles.platformCheckbox} ${
                     selectedPlatforms.includes(platform.id) ? styles.selected : ''
                   }`}
-                  style={{
-                    backgroundColor: selectedPlatforms.includes(platform.id)
-                      ? platform.color
-                      : undefined,
-                    color: selectedPlatforms.includes(platform.id)
-                      ? platform.textColor
-                      : undefined,
-                    borderColor: selectedPlatforms.includes(platform.id)
-                      ? platform.textColor
-                      : undefined,
-                  }}
                 >
                   <input
                     type="checkbox"
@@ -111,6 +101,9 @@ export function AddGameForm({ isOpen, onClose, onSubmit, editingGame, onUpdate }
                     onChange={() => handlePlatformToggle(platform.id)}
                     className={styles.checkbox}
                   />
+                  <svg className={styles.checkIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                   {platform.name}
                 </label>
               ))}
@@ -121,7 +114,10 @@ export function AddGameForm({ isOpen, onClose, onSubmit, editingGame, onUpdate }
               Cancel
             </button>
             <button type="submit" className={styles.submitButton} disabled={!title.trim()}>
-              {editingGame ? 'Save Changes' : 'Add Game'}
+              <svg className={styles.submitIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {editingGame ? 'Save' : 'Add Game'}
             </button>
           </div>
         </form>

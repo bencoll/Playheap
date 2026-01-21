@@ -11,13 +11,8 @@ export function PlatformBadge({ platform }: PlatformBadgeProps) {
   if (!config) return null;
 
   return (
-    <span
-      className={styles.badge}
-      style={{
-        backgroundColor: config.color,
-        color: config.textColor,
-      }}
-    >
+    <span className={styles.badge} data-platform={platform}>
+      <span className={styles.platformDot} />
       {config.name}
     </span>
   );

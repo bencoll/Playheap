@@ -2,26 +2,73 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-bg-card);
+  padding: var(--space-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--card-accent, var(--color-border));
   border-radius: var(--radius-md);
-  border-left: 3px solid transparent;
-  box-shadow: var(--shadow-card);
   cursor: grab;
-  transition: box-shadow var(--transition-fast), background-color var(--transition-fast);
+  transition: all var(--transition-normal);
+  position: relative;
+  animation: slideUp 300ms ease-out both;
+  animation-delay: calc(var(--card-index, 0) * 50ms);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-elevated);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover), 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .card:active {
   cursor: grabbing;
+  transform: translateY(0);
 }
 
 .card.dragging {
-  opacity: 0.5;
-  box-shadow: var(--shadow-lg);
+  opacity: 0.6;
+  transform: scale(1.02) rotate(1deg);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+/* Platform accent colors on left border */
+.card[data-platform="switch"] {
+  border-left-color: var(--color-switch-border);
+}
+
+.card[data-platform="switch"]:hover {
+  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-switch-glow);
+}
+
+.card[data-platform="steam-deck"] {
+  border-left-color: var(--color-steam-deck-border);
+}
+
+.card[data-platform="steam-deck"]:hover {
+  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-steam-deck-glow);
+}
+
+.card[data-platform="steam"] {
+  border-left-color: var(--color-steam-border);
+}
+
+.card[data-platform="steam"]:hover {
+  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-steam-glow);
 }
 
 .content {
@@ -30,11 +77,13 @@
 }
 
 .title {
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text);
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-sm);
   word-break: break-word;
+  line-height: 1.4;
 }
 
 .platforms {
@@ -45,7 +94,7 @@
 
 .actions {
   display: flex;
-  gap: var(--space-xs);
+  gap: 2px;
   opacity: 0;
   transition: opacity var(--transition-fast);
   margin-left: var(--space-sm);
@@ -60,14 +109,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .actionButton:hover {
-  background-color: var(--color-border-light);
+  background: var(--color-border);
   color: var(--color-text);
+}
+
+.actionButton.delete:hover {
+  background: rgba(255, 50, 80, 0.15);
+  color: var(--color-switch-text);
+}
+
+.actionIcon {
+  width: 14px;
+  height: 14px;
 }
