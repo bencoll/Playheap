@@ -14,7 +14,7 @@ import {
 } from '@dnd-kit/core';
 import type { Game, ColumnId } from '../../types';
 import { COLUMN_CONFIG } from '../../types';
-import { useGameLibrary } from '../../contexts/GameLibraryContext';
+import { useGameLibrary } from '../../contexts/useGameLibrary';
 import { Column } from '../Column';
 import { GameCard } from '../GameCard';
 import styles from './Board.module.css';

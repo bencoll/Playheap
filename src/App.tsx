@@ -3,7 +3,7 @@ import { Header } from './components/Header';
 import { Board } from './components/Board';
 import { AddGameForm } from './components/AddGameForm';
 import { ConfirmDialog } from './components/ConfirmDialog';
-import { useGameLibrary } from './contexts/GameLibraryContext';
+import { useGameLibrary } from './contexts/useGameLibrary';
 import type { Game, Platform, HltbData } from './types';
 import styles from './App.module.css';
 
