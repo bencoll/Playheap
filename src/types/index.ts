@@ -9,6 +9,23 @@ export interface PlatformConfig {
   textColor: string;
 }
 
+export interface HltbData {
+  hltbId: string;
+  imageUrl: string;
+  gameplayMain?: number;
+  gameplayMainExtra?: number;
+  gameplayCompletionist?: number;
+}
+
+export interface HltbSearchResult {
+  id: string;
+  name: string;
+  imageUrl: string;
+  gameplayMain: number;
+  gameplayMainExtra: number;
+  gameplayCompletionist: number;
+}
+
 export interface Game {
   id: string;
   title: string;
@@ -16,6 +33,7 @@ export interface Game {
   platforms: Platform[];
   createdAt: number;
   updatedAt: number;
+  hltb?: HltbData;
 }
 
 export interface Column {

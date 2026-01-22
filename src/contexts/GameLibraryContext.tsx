@@ -1,14 +1,14 @@
 import { createContext, useContext, useCallback, type ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import type { Game, GameLibraryState, Platform, ColumnId } from '../types';
+import type { Game, GameLibraryState, Platform, ColumnId, HltbData } from '../types';
 import { DEFAULT_STATE } from '../types';
 
 const STORAGE_KEY = 'game-library';
 
 interface GameLibraryContextValue {
   state: GameLibraryState;
-  addGame: (title: string, platforms: Platform[]) => string;
-  updateGame: (id: string, updates: Partial<Pick<Game, 'title' | 'platforms'>>) => void;
+  addGame: (title: string, platforms: Platform[], hltb?: HltbData) => string;
+  updateGame: (id: string, updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb'>>) => void;
   deleteGame: (id: string) => void;
   moveGame: (gameId: string, targetColumnId: ColumnId, targetIndex: number) => void;
   getGamesForColumn: (columnId: ColumnId) => Game[];
@@ -19,7 +19,7 @@ const GameLibraryContext = createContext<GameLibraryContextValue | null>(null);
 export function GameLibraryProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useLocalStorage<GameLibraryState>(STORAGE_KEY, DEFAULT_STATE);
 
-  const addGame = useCallback((title: string, platforms: Platform[]) => {
+  const addGame = useCallback((title: string, platforms: Platform[], hltb?: HltbData) => {
     const id = crypto.randomUUID();
     const now = Date.now();
     const newGame: Game = {
@@ -29,6 +29,7 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
       platforms,
       createdAt: now,
       updatedAt: now,
+      ...(hltb && { hltb }),
     };
 
     setState((prev) => ({
@@ -46,7 +47,7 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
     return id;
   }, [setState]);
 
-  const updateGame = useCallback((id: string, updates: Partial<Pick<Game, 'title' | 'platforms'>>) => {
+  const updateGame = useCallback((id: string, updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb'>>) => {
     setState((prev) => {
       const game = prev.games[id];
       if (!game) return prev;

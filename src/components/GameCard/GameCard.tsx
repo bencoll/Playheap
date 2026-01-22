@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Game } from '../../types';
 import { PlatformBadge } from '../PlatformBadge';
 import styles from './GameCard.module.css';
@@ -16,12 +17,26 @@ export function GameCard({
   isDragging,
 }: GameCardProps) {
   const primaryPlatform = game.platforms[0];
+  const [imageError, setImageError] = useState(false);
+  const hasImage = game.hltb?.imageUrl && !imageError;
 
   return (
     <div
       data-platform={primaryPlatform || undefined}
-      className={`${styles.card} ${isDragging ? styles.dragging : ''}`}
+      className={`${styles.card} ${isDragging ? styles.dragging : ''} ${hasImage ? styles.withImage : ''}`}
     >
+      {hasImage && (
+        <div className={styles.imageContainer}>
+          <img
+            src={game.hltb!.imageUrl}
+            alt=""
+            className={styles.image}
+            loading="lazy"
+            onError={() => setImageError(true)}
+          />
+          <div className={styles.imageScanlines} />
+        </div>
+      )}
       <div className={styles.content}>
         <h4 className={styles.title}>{game.title}</h4>
         {game.platforms.length > 0 && (
