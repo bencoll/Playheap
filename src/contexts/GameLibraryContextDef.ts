@@ -9,10 +9,15 @@ import type {
 
 export interface GameLibraryContextValue {
   state: GameLibraryState;
-  addGame: (title: string, platforms: Platform[], hltb?: HltbData) => string;
+  addGame: (
+    title: string,
+    platforms: Platform[],
+    hltb?: HltbData,
+    tags?: string[]
+  ) => string;
   updateGame: (
     id: string,
-    updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb'>>
+    updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags'>>
   ) => void;
   deleteGame: (id: string) => void;
   moveGame: (
@@ -21,6 +26,8 @@ export interface GameLibraryContextValue {
     targetIndex: number
   ) => void;
   getGamesForColumn: (columnId: ColumnId) => Game[];
+  addTag: (name: string) => void;
+  deleteTag: (name: string) => void;
 }
 
 export const GameLibraryContext = createContext<GameLibraryContextValue | null>(

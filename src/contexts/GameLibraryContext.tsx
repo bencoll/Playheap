@@ -19,7 +19,12 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
   );
 
   const addGame = useCallback(
-    (title: string, platforms: Platform[], hltb?: HltbData) => {
+    (
+      title: string,
+      platforms: Platform[],
+      hltb?: HltbData,
+      tags?: string[]
+    ) => {
       const id = crypto.randomUUID();
       const now = Date.now();
       const newGame: Game = {
@@ -30,6 +35,7 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
         createdAt: now,
         updatedAt: now,
         ...(hltb && { hltb }),
+        ...(tags && tags.length > 0 && { tags }),
       };
 
       setState((prev) => ({
@@ -52,7 +58,7 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
   const updateGame = useCallback(
     (
       id: string,
-      updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb'>>
+      updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags'>>
     ) => {
       setState((prev) => {
         const game = prev.games[id];
@@ -162,6 +168,58 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
     [state]
   );
 
+  const addTag = useCallback(
+    (name: string) => {
+      const trimmedName = name.trim();
+      if (!trimmedName) return;
+
+      setState((prev) => {
+        // Ensure tags array exists and check for duplicates
+        const existingTags = prev.tags || [];
+        if (existingTags.includes(trimmedName)) return prev;
+
+        return {
+          ...prev,
+          tags: [...existingTags, trimmedName],
+        };
+      });
+    },
+    [setState]
+  );
+
+  const deleteTag = useCallback(
+    (name: string) => {
+      setState((prev) => {
+        const existingTags = prev.tags || [];
+        if (!existingTags.includes(name)) return prev;
+
+        // Remove tag from global list
+        const newTags = existingTags.filter((t) => t !== name);
+
+        // Remove tag from all games that have it
+        const updatedGames: Record<string, Game> = {};
+        for (const [id, game] of Object.entries(prev.games)) {
+          if (game.tags?.includes(name)) {
+            updatedGames[id] = {
+              ...game,
+              tags: game.tags.filter((t) => t !== name),
+              updatedAt: Date.now(),
+            };
+          } else {
+            updatedGames[id] = game;
+          }
+        }
+
+        return {
+          ...prev,
+          tags: newTags,
+          games: updatedGames,
+        };
+      });
+    },
+    [setState]
+  );
+
   return (
     <GameLibraryContext.Provider
       value={{
@@ -171,6 +229,8 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
         deleteGame,
         moveGame,
         getGamesForColumn,
+        addTag,
+        deleteTag,
       }}
     >
       {children}

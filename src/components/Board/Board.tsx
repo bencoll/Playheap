@@ -22,9 +22,14 @@ import styles from './Board.module.css';
 interface BoardProps {
   onEditGame: (game: Game) => void;
   onDeleteGame: (id: string) => void;
+  activeTagFilters: string[];
 }
 
-export function Board({ onEditGame, onDeleteGame }: BoardProps) {
+export function Board({
+  onEditGame,
+  onDeleteGame,
+  activeTagFilters,
+}: BoardProps) {
   const { state, moveGame, getGamesForColumn } = useGameLibrary();
   const [activeGame, setActiveGame] = useState<Game | null>(null);
   const [overColumnId, setOverColumnId] = useState<ColumnId | null>(null);
@@ -140,9 +145,19 @@ export function Board({ onEditGame, onDeleteGame }: BoardProps) {
     }
   };
 
+  // Filter games by tags (AND logic - games must have ALL selected tags)
+  const filterGamesByTags = (games: Game[]): Game[] => {
+    if (activeTagFilters.length === 0) {
+      return games;
+    }
+    return games.filter((game) =>
+      activeTagFilters.every((tag) => game.tags?.includes(tag))
+    );
+  };
+
   // Build games arrays with drag preview logic
   const getGamesWithDragPreview = (columnId: ColumnId): Game[] => {
-    const games = getGamesForColumn(columnId);
+    const games = filterGamesByTags(getGamesForColumn(columnId));
 
     if (!activeGame || !overColumnId) {
       return games;

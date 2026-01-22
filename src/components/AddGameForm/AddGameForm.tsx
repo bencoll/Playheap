@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Game, Platform, HltbData, HltbSearchResult } from '../../types';
 import { PLATFORMS } from '../../types';
 import { useHltbSearch } from '../../hooks/useHltbSearch';
+import { TagSelector } from '../TagSelector';
 import styles from './AddGameForm.module.css';
 
 type Step = 'search' | 'platforms';
@@ -9,13 +10,19 @@ type Step = 'search' | 'platforms';
 interface AddGameFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (title: string, platforms: Platform[], hltb?: HltbData) => void;
+  onSubmit: (
+    title: string,
+    platforms: Platform[],
+    hltb?: HltbData,
+    tags?: string[]
+  ) => void;
   editingGame?: Game | null;
   onUpdate?: (
     id: string,
     title: string,
     platforms: Platform[],
-    hltb?: HltbData
+    hltb?: HltbData,
+    tags?: string[]
   ) => void;
 }
 
@@ -35,6 +42,9 @@ export function AddGameForm({
     editingGame?.hltb ?? null
   );
   const [isChangingImage, setIsChangingImage] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    editingGame?.tags ?? []
+  );
 
   const { results, isLoading, search, clearResults } = useHltbSearch();
 
@@ -82,19 +92,28 @@ export function AddGameForm({
     e.preventDefault();
     if (!title.trim()) return;
 
+    const tagsToSubmit = selectedTags.length > 0 ? selectedTags : undefined;
+
     if (editingGame && onUpdate) {
       onUpdate(
         editingGame.id,
         title.trim(),
         selectedPlatforms,
-        selectedHltb || undefined
+        selectedHltb || undefined,
+        tagsToSubmit
       );
     } else {
-      onSubmit(title.trim(), selectedPlatforms, selectedHltb || undefined);
+      onSubmit(
+        title.trim(),
+        selectedPlatforms,
+        selectedHltb || undefined,
+        tagsToSubmit
+      );
     }
     setTitle('');
     setSelectedPlatforms([]);
     setSelectedHltb(null);
+    setSelectedTags([]);
     setStep('search');
     onClose();
   };
@@ -304,6 +323,13 @@ export function AddGameForm({
                     </label>
                   ))}
                 </div>
+              </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Tags</label>
+                <TagSelector
+                  selectedTags={selectedTags}
+                  onTagsChange={setSelectedTags}
+                />
               </div>
               <div className={styles.actions}>
                 {!editingGame && (

@@ -34,6 +34,7 @@ export interface Game {
   createdAt: number;
   updatedAt: number;
   hltb?: HltbData;
+  tags?: string[];
 }
 
 export interface Column {
@@ -45,11 +46,17 @@ export interface Column {
 export interface GameLibraryState {
   games: Record<string, Game>;
   columns: Record<ColumnId, Column>;
+  tags: string[];
 }
 
 export const PLATFORMS: PlatformConfig[] = [
   { id: 'switch', name: 'Switch', color: '#FFE5E5', textColor: '#E60012' },
-  { id: 'steam-deck', name: 'Steam Deck', color: '#E8E5F0', textColor: '#1A1A2E' },
+  {
+    id: 'steam-deck',
+    name: 'Steam Deck',
+    color: '#E8E5F0',
+    textColor: '#1A1A2E',
+  },
   { id: 'steam', name: 'Steam', color: '#E5EEF5', textColor: '#1B2838' },
 ];
 
@@ -68,4 +75,5 @@ export const DEFAULT_STATE: GameLibraryState = {
     playing: { id: 'playing', title: 'Playing', gameIds: [] },
     finished: { id: 'finished', title: 'Finished', gameIds: [] },
   },
+  tags: [],
 };

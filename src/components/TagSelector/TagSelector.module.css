@@ -1,0 +1,57 @@
+.tagSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.tagChip:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-elevated);
+}
+
+.tagChip.selected {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  box-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+.checkIcon {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all var(--transition-fast);
+  margin-left: -2px;
+}
+
+.tagChip.selected .checkIcon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.emptyState {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-text-dim);
+  padding: var(--space-sm) 0;
+}

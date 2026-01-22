@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { Board } from './components/Board';
 import { AddGameForm } from './components/AddGameForm';
 import { ConfirmDialog } from './components/ConfirmDialog';
+import { TagManagerDialog } from './components/TagManagerDialog';
 import { useGameLibrary } from './contexts/useGameLibrary';
 import type { Game, Platform, HltbData } from './types';
 import styles from './App.module.css';
@@ -13,6 +14,8 @@ function App() {
   const [editingGame, setEditingGame] = useState<Game | null>(null);
   const [formKey, setFormKey] = useState(0);
   const [gameToDelete, setGameToDelete] = useState<string | null>(null);
+  const [isTagManagerOpen, setIsTagManagerOpen] = useState(false);
+  const [activeTagFilters, setActiveTagFilters] = useState<string[]>([]);
 
   const gameToDeleteTitle = gameToDelete
     ? state.games[gameToDelete]?.title
@@ -47,18 +50,20 @@ function App() {
   const handleFormSubmit = (
     title: string,
     platforms: Platform[],
-    hltb?: HltbData
+    hltb?: HltbData,
+    tags?: string[]
   ) => {
-    addGame(title, platforms, hltb);
+    addGame(title, platforms, hltb, tags);
   };
 
   const handleFormUpdate = (
     id: string,
     title: string,
     platforms: Platform[],
-    hltb?: HltbData
+    hltb?: HltbData,
+    tags?: string[]
   ) => {
-    updateGame(id, { title, platforms, hltb });
+    updateGame(id, { title, platforms, hltb, tags });
   };
 
   const handleFormClose = () => {
@@ -68,8 +73,17 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Header onAddGame={handleAddGame} />
-      <Board onEditGame={handleEditGame} onDeleteGame={handleDeleteGame} />
+      <Header
+        onAddGame={handleAddGame}
+        onManageTags={() => setIsTagManagerOpen(true)}
+        activeTagFilters={activeTagFilters}
+        onTagFiltersChange={setActiveTagFilters}
+      />
+      <Board
+        onEditGame={handleEditGame}
+        onDeleteGame={handleDeleteGame}
+        activeTagFilters={activeTagFilters}
+      />
       <AddGameForm
         key={editingGame?.id ?? `new-${formKey}`}
         isOpen={isFormOpen}
@@ -86,6 +100,10 @@ function App() {
         cancelLabel="Cancel"
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
+      />
+      <TagManagerDialog
+        isOpen={isTagManagerOpen}
+        onClose={() => setIsTagManagerOpen(false)}
       />
     </div>
   );
