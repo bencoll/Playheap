@@ -31,7 +31,9 @@
   border-color: var(--color-border-hover);
   background: var(--color-bg-elevated);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover), 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    var(--shadow-card-hover),
+    0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .card:active {
@@ -40,35 +42,42 @@
 }
 
 .card.dragging {
-  opacity: 0.6;
   transform: scale(1.02) rotate(1deg);
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 30px rgba(0, 0, 0, 0.3);
   z-index: 100;
 }
 
 /* Platform accent colors on left border */
-.card[data-platform="switch"] {
+.card[data-platform='switch'] {
   border-left-color: var(--color-switch-border);
 }
 
-.card[data-platform="switch"]:hover {
-  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-switch-glow);
+.card[data-platform='switch']:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 0 15px var(--color-switch-glow);
 }
 
-.card[data-platform="steam-deck"] {
+.card[data-platform='steam-deck'] {
   border-left-color: var(--color-steam-deck-border);
 }
 
-.card[data-platform="steam-deck"]:hover {
-  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-steam-deck-glow);
+.card[data-platform='steam-deck']:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 0 15px var(--color-steam-deck-glow);
 }
 
-.card[data-platform="steam"] {
+.card[data-platform='steam'] {
   border-left-color: var(--color-steam-border);
 }
 
-.card[data-platform="steam"]:hover {
-  box-shadow: var(--shadow-card-hover), 0 0 15px var(--color-steam-glow);
+.card[data-platform='steam']:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 0 15px var(--color-steam-glow);
 }
 
 .content {
