@@ -1,4 +1,4 @@
-import { useCallback, type ReactNode } from 'react';
+import { useCallback, useMemo, type ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type {
   Game,
@@ -12,10 +12,39 @@ import { GameLibraryContext } from './GameLibraryContextDef';
 
 const STORAGE_KEY = 'game-library';
 
+// Migration: add rotation column if missing (for existing localStorage data)
+function migrateState(state: GameLibraryState): GameLibraryState {
+  if (!state.columns.rotation) {
+    return {
+      ...state,
+      columns: {
+        ...state.columns,
+        rotation: { id: 'rotation', title: 'On Rotation', gameIds: [] },
+      },
+    };
+  }
+  return state;
+}
+
 export function GameLibraryProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useLocalStorage<GameLibraryState>(
+  const [rawState, setRawState] = useLocalStorage<GameLibraryState>(
     STORAGE_KEY,
     DEFAULT_STATE
+  );
+
+  // Apply migrations synchronously
+  const state = useMemo(() => migrateState(rawState), [rawState]);
+
+  // Persist migrated state if it changed
+  const setState = useCallback(
+    (updater: GameLibraryState | ((prev: GameLibraryState) => GameLibraryState)) => {
+      setRawState((prev) => {
+        const migrated = migrateState(prev);
+        const next = typeof updater === 'function' ? updater(migrated) : updater;
+        return next;
+      });
+    },
+    [setRawState]
   );
 
   const addGame = useCallback(

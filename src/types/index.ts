@@ -1,4 +1,4 @@
-export type ColumnId = 'backlog' | 'up-next' | 'playing' | 'done';
+export type ColumnId = 'backlog' | 'up-next' | 'playing' | 'rotation' | 'done';
 
 export type Platform = 'switch' | 'steam-deck' | 'steam' | 'vr';
 
@@ -66,6 +66,7 @@ export const COLUMN_CONFIG: { id: ColumnId; title: string }[] = [
   { id: 'backlog', title: 'Backlog' },
   { id: 'up-next', title: 'Up Next' },
   { id: 'playing', title: 'Playing' },
+  { id: 'rotation', title: 'On Rotation' },
   { id: 'done', title: 'Done' },
 ];
 
@@ -75,6 +76,7 @@ export const DEFAULT_STATE: GameLibraryState = {
     backlog: { id: 'backlog', title: 'Backlog', gameIds: [] },
     'up-next': { id: 'up-next', title: 'Up Next', gameIds: [] },
     playing: { id: 'playing', title: 'Playing', gameIds: [] },
+    rotation: { id: 'rotation', title: 'On Rotation', gameIds: [] },
     done: { id: 'done', title: 'Done', gameIds: [] },
   },
   tags: [],

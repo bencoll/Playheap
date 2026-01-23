@@ -40,6 +40,10 @@
   background: linear-gradient(90deg, var(--color-playing), transparent);
 }
 
+.column[data-column='rotation']::before {
+  background: linear-gradient(90deg, var(--color-rotation), transparent);
+}
+
 .column[data-column='done']::before {
   background: linear-gradient(90deg, var(--color-done), transparent);
 }
@@ -79,6 +83,11 @@
 .column[data-column='playing'] .statusDot {
   background: var(--color-playing);
   box-shadow: 0 0 8px var(--color-playing);
+}
+
+.column[data-column='rotation'] .statusDot {
+  background: var(--color-rotation);
+  box-shadow: 0 0 8px var(--color-rotation);
 }
 
 .column[data-column='done'] .statusDot {
