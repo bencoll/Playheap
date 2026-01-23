@@ -80,6 +80,16 @@
     0 0 15px var(--color-steam-glow);
 }
 
+.card[data-platform='vr'] {
+  border-left-color: var(--color-vr-border);
+}
+
+.card[data-platform='vr']:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 0 15px var(--color-vr-glow);
+}
+
 .content {
   flex: 1;
   min-width: 0;

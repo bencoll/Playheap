@@ -1,6 +1,6 @@
 export type ColumnId = 'backlog' | 'up-next' | 'playing' | 'done';
 
-export type Platform = 'switch' | 'steam-deck' | 'steam';
+export type Platform = 'switch' | 'steam-deck' | 'steam' | 'vr';
 
 export interface PlatformConfig {
   id: Platform;
@@ -59,6 +59,7 @@ export const PLATFORMS: PlatformConfig[] = [
     textColor: '#1A1A2E',
   },
   { id: 'steam', name: 'Steam', color: '#E5EEF5', textColor: '#1B2838' },
+  { id: 'vr', name: 'VR', color: '#E5F5E8', textColor: '#16a34a' },
 ];
 
 export const COLUMN_CONFIG: { id: ColumnId; title: string }[] = [

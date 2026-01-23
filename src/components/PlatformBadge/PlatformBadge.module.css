@@ -15,22 +15,28 @@
 }
 
 /* Platform-specific styles */
-.badge[data-platform="switch"] {
+.badge[data-platform='switch'] {
   color: var(--color-switch-text);
   background: var(--color-switch-bg);
   border-color: rgba(255, 50, 80, 0.3);
 }
 
-.badge[data-platform="steam-deck"] {
+.badge[data-platform='steam-deck'] {
   color: var(--color-steam-deck-text);
   background: var(--color-steam-deck-bg);
   border-color: rgba(156, 100, 255, 0.3);
 }
 
-.badge[data-platform="steam"] {
+.badge[data-platform='steam'] {
   color: var(--color-steam-text);
   background: var(--color-steam-bg);
   border-color: rgba(0, 180, 216, 0.3);
+}
+
+.badge[data-platform='vr'] {
+  color: var(--color-vr-text);
+  background: var(--color-vr-bg);
+  border-color: rgba(34, 197, 94, 0.3);
 }
 
 .platformDot {

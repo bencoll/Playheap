@@ -40,6 +40,11 @@
   --color-steam-border: #00b4d8;
   --color-steam-glow: rgba(0, 180, 216, 0.5);
 
+  --color-vr-bg: rgba(34, 197, 94, 0.15);
+  --color-vr-text: #22c55e;
+  --color-vr-border: #22c55e;
+  --color-vr-glow: rgba(34, 197, 94, 0.5);
+
   /* Column status colors */
   --color-backlog: #6b7280;
   --color-upnext: #f59e0b;

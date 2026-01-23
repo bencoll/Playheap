@@ -224,6 +224,13 @@
   box-shadow: 0 0 15px var(--color-steam-glow);
 }
 
+.platformCheckbox[data-platform='vr'].selected {
+  color: var(--color-vr-text);
+  border-color: var(--color-vr-border);
+  background: var(--color-vr-bg);
+  box-shadow: 0 0 15px var(--color-vr-glow);
+}
+
 .checkbox {
   display: none;
 }
