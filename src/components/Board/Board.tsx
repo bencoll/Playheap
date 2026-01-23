@@ -145,13 +145,13 @@ export function Board({
     }
   };
 
-  // Filter games by tags (AND logic - games must have ALL selected tags)
+  // Filter games by tags (OR logic - games must have ANY selected tags)
   const filterGamesByTags = (games: Game[]): Game[] => {
     if (activeTagFilters.length === 0) {
       return games;
     }
     return games.filter((game) =>
-      activeTagFilters.every((tag) => game.tags?.includes(tag))
+      activeTagFilters.some((tag) => game.tags?.includes(tag))
     );
   };
 
