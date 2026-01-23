@@ -58,7 +58,9 @@ export function GameLibraryProvider({ children }: { children: ReactNode }) {
   const updateGame = useCallback(
     (
       id: string,
-      updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags'>>
+      updates: Partial<
+        Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags' | 'notes'>
+      >
     ) => {
       setState((prev) => {
         const game = prev.games[id];

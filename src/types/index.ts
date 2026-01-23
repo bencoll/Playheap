@@ -1,4 +1,4 @@
-export type ColumnId = 'backlog' | 'up-next' | 'playing' | 'finished';
+export type ColumnId = 'backlog' | 'up-next' | 'playing' | 'done';
 
 export type Platform = 'switch' | 'steam-deck' | 'steam';
 
@@ -35,6 +35,7 @@ export interface Game {
   updatedAt: number;
   hltb?: HltbData;
   tags?: string[];
+  notes?: string;
 }
 
 export interface Column {
@@ -64,7 +65,7 @@ export const COLUMN_CONFIG: { id: ColumnId; title: string }[] = [
   { id: 'backlog', title: 'Backlog' },
   { id: 'up-next', title: 'Up Next' },
   { id: 'playing', title: 'Playing' },
-  { id: 'finished', title: 'Finished' },
+  { id: 'done', title: 'Done' },
 ];
 
 export const DEFAULT_STATE: GameLibraryState = {
@@ -73,7 +74,7 @@ export const DEFAULT_STATE: GameLibraryState = {
     backlog: { id: 'backlog', title: 'Backlog', gameIds: [] },
     'up-next': { id: 'up-next', title: 'Up Next', gameIds: [] },
     playing: { id: 'playing', title: 'Playing', gameIds: [] },
-    finished: { id: 'finished', title: 'Finished', gameIds: [] },
+    done: { id: 'done', title: 'Done', gameIds: [] },
   },
   tags: [],
 };

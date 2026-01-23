@@ -28,20 +28,20 @@
 }
 
 /* Column accent colors */
-.column[data-column="backlog"]::before {
+.column[data-column='backlog']::before {
   background: linear-gradient(90deg, var(--color-backlog), transparent);
 }
 
-.column[data-column="up-next"]::before {
+.column[data-column='up-next']::before {
   background: linear-gradient(90deg, var(--color-upnext), transparent);
 }
 
-.column[data-column="playing"]::before {
+.column[data-column='playing']::before {
   background: linear-gradient(90deg, var(--color-playing), transparent);
 }
 
-.column[data-column="finished"]::before {
-  background: linear-gradient(90deg, var(--color-finished), transparent);
+.column[data-column='done']::before {
+  background: linear-gradient(90deg, var(--color-done), transparent);
 }
 
 .header {
@@ -66,24 +66,24 @@
   box-shadow: 0 0 8px currentColor;
 }
 
-.column[data-column="backlog"] .statusDot {
+.column[data-column='backlog'] .statusDot {
   background: var(--color-backlog);
   box-shadow: 0 0 8px var(--color-backlog);
 }
 
-.column[data-column="up-next"] .statusDot {
+.column[data-column='up-next'] .statusDot {
   background: var(--color-upnext);
   box-shadow: 0 0 8px var(--color-upnext);
 }
 
-.column[data-column="playing"] .statusDot {
+.column[data-column='playing'] .statusDot {
   background: var(--color-playing);
   box-shadow: 0 0 8px var(--color-playing);
 }
 
-.column[data-column="finished"] .statusDot {
-  background: var(--color-finished);
-  box-shadow: 0 0 8px var(--color-finished);
+.column[data-column='done'] .statusDot {
+  background: var(--color-done);
+  box-shadow: 0 0 8px var(--color-done);
 }
 
 .title {

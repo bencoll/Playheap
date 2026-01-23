@@ -17,7 +17,9 @@ export interface GameLibraryContextValue {
   ) => string;
   updateGame: (
     id: string,
-    updates: Partial<Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags'>>
+    updates: Partial<
+      Pick<Game, 'title' | 'platforms' | 'hltb' | 'tags' | 'notes'>
+    >
   ) => void;
   deleteGame: (id: string) => void;
   moveGame: (
