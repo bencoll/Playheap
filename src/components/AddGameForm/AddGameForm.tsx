@@ -22,7 +22,8 @@ interface AddGameFormProps {
     title: string,
     platforms: Platform[],
     hltb?: HltbData,
-    tags?: string[]
+    tags?: string[],
+    notes?: string
   ) => void;
 }
 
@@ -45,6 +46,7 @@ export function AddGameForm({
   const [selectedTags, setSelectedTags] = useState<string[]>(
     editingGame?.tags ?? []
   );
+  const [notes, setNotes] = useState(editingGame?.notes ?? '');
 
   const { results, isLoading, search, clearResults } = useHltbSearch();
 
@@ -93,6 +95,7 @@ export function AddGameForm({
     if (!title.trim()) return;
 
     const tagsToSubmit = selectedTags.length > 0 ? selectedTags : undefined;
+    const notesToSubmit = notes.trim() || undefined;
 
     if (editingGame && onUpdate) {
       onUpdate(
@@ -100,7 +103,8 @@ export function AddGameForm({
         title.trim(),
         selectedPlatforms,
         selectedHltb || undefined,
-        tagsToSubmit
+        tagsToSubmit,
+        notesToSubmit
       );
     } else {
       onSubmit(
@@ -114,6 +118,7 @@ export function AddGameForm({
     setSelectedPlatforms([]);
     setSelectedHltb(null);
     setSelectedTags([]);
+    setNotes('');
     setStep('search');
     onClose();
   };
@@ -331,6 +336,21 @@ export function AddGameForm({
                   onTagsChange={setSelectedTags}
                 />
               </div>
+              {editingGame && (
+                <div className={styles.field}>
+                  <label htmlFor="gameNotes" className={styles.label}>
+                    Notes
+                  </label>
+                  <textarea
+                    id="gameNotes"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className={styles.textarea}
+                    placeholder="Add notes about this game..."
+                    rows={4}
+                  />
+                </div>
+              )}
               <div className={styles.actions}>
                 {!editingGame && (
                   <button

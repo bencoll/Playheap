@@ -61,9 +61,10 @@ function App() {
     title: string,
     platforms: Platform[],
     hltb?: HltbData,
-    tags?: string[]
+    tags?: string[],
+    notes?: string
   ) => {
-    updateGame(id, { title, platforms, hltb, tags });
+    updateGame(id, { title, platforms, hltb, tags, notes });
   };
 
   const handleFormClose = () => {
