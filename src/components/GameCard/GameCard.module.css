@@ -194,3 +194,12 @@
 .card.withImage .actions {
   align-self: flex-start;
 }
+
+.playtime {
+  position: absolute;
+  bottom: var(--space-xs);
+  right: var(--space-xs);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}

@@ -47,6 +47,11 @@ export function GameCard({
           </div>
         )}
       </div>
+      {game.hltb?.gameplayMain && (
+        <span className={styles.playtime}>
+          {Math.round(game.hltb.gameplayMain / 3600)}h
+        </span>
+      )}
       <div className={styles.actions}>
         <button
           className={styles.actionButton}
