@@ -4,6 +4,7 @@ import { Board } from './components/Board';
 import { AddGameForm } from './components/AddGameForm';
 import { ConfirmDialog } from './components/ConfirmDialog';
 import { TagManagerDialog } from './components/TagManagerDialog';
+import { RandomSpinner } from './components/RandomSpinner';
 import { useGameLibrary } from './contexts/useGameLibrary';
 import type { Game, Platform, HltbData } from './types';
 import styles from './App.module.css';
@@ -15,6 +16,7 @@ function App() {
   const [formKey, setFormKey] = useState(0);
   const [gameToDelete, setGameToDelete] = useState<string | null>(null);
   const [isTagManagerOpen, setIsTagManagerOpen] = useState(false);
+  const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
   const [activeTagFilters, setActiveTagFilters] = useState<string[]>([]);
 
   const gameToDeleteTitle = gameToDelete
@@ -77,6 +79,7 @@ function App() {
       <Header
         onAddGame={handleAddGame}
         onManageTags={() => setIsTagManagerOpen(true)}
+        onRandomSpin={() => setIsSpinnerOpen(true)}
         activeTagFilters={activeTagFilters}
         onTagFiltersChange={setActiveTagFilters}
       />
@@ -105,6 +108,10 @@ function App() {
       <TagManagerDialog
         isOpen={isTagManagerOpen}
         onClose={() => setIsTagManagerOpen(false)}
+      />
+      <RandomSpinner
+        isOpen={isSpinnerOpen}
+        onClose={() => setIsSpinnerOpen(false)}
       />
     </div>
   );

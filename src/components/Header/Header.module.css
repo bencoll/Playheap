@@ -76,6 +76,56 @@
   gap: var(--space-sm);
 }
 
+.spinButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.spinButton:hover {
+  border-color: #ff6b6b;
+  color: var(--color-text);
+  background: var(--color-bg-elevated);
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+}
+
+.spinButton:hover .spinIcon {
+  color: #ff6b6b;
+  animation: diceShake 0.5s ease-in-out;
+}
+
+@keyframes diceShake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.spinIcon {
+  width: 16px;
+  height: 16px;
+  transition: color var(--transition-fast);
+}
+
 .manageTagsButton {
   display: flex;
   align-items: center;
