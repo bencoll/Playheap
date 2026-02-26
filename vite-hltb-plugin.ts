@@ -1,8 +1,8 @@
 import type { Plugin } from 'vite';
 
 const HLTB_BASE_URL = 'https://howlongtobeat.com';
-const HLTB_SEARCH_URL = `${HLTB_BASE_URL}/api/search`;
-const HLTB_INIT_URL = `${HLTB_BASE_URL}/api/search/init`;
+const HLTB_SEARCH_URL = `${HLTB_BASE_URL}/api/finder`;
+const HLTB_INIT_URL = `${HLTB_BASE_URL}/api/finder/init`;
 const HLTB_REFERER = `${HLTB_BASE_URL}/`;
 
 interface HltbSearchResult {
