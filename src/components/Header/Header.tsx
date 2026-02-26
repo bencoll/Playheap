@@ -20,19 +20,7 @@ export function Header({
     <header className={styles.header}>
       <div className={styles.titleWrapper}>
         <div className={styles.logo}>
-          <svg
-            className={styles.logoIcon}
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="5 3 19 12 5 21 5 3" />
-          </svg>
+          <img src="/play-icon-cyan.svg" alt="play-icon-cyan" />
         </div>
         <h1 className={styles.title}>Playheap</h1>
       </div>
