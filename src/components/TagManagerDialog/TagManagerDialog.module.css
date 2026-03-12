@@ -122,8 +122,8 @@
 }
 
 .deleteButton:hover {
-  background: rgba(255, 71, 87, 0.1);
-  color: #ff4757;
+  background: var(--color-danger-subtle);
+  color: var(--color-danger);
 }
 
 .deleteIcon {

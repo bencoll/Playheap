@@ -86,14 +86,14 @@
 }
 
 .spinButton:hover {
-  border-color: #ff6b6b;
+  border-color: var(--color-spinner-primary);
   color: var(--color-text);
   background: var(--color-bg-elevated);
-  box-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 0 12px var(--color-spinner-glow);
 }
 
 .spinButton:hover .spinIcon {
-  color: #ff6b6b;
+  color: var(--color-spinner-primary);
   animation: diceShake 0.5s ease-in-out;
 }
 
