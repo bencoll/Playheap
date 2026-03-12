@@ -36,7 +36,10 @@ export function useSpinnerAnimation({
   // Start with enough items above to fill the viewport (need ~3 items above center)
   // Use at least 3 items worth of offset, or one full set, whichever is larger
   const minItemsAbove = 3;
-  const initialPosition = Math.max(minItemsAbove * itemHeight, itemCount * itemHeight);
+  const initialPosition = Math.max(
+    minItemsAbove * itemHeight,
+    itemCount * itemHeight
+  );
   const [position, setPosition] = useState(initialPosition);
   const [isSpinning, setIsSpinning] = useState(false);
 
@@ -81,7 +84,10 @@ export function useSpinnerAnimation({
     const itemsBufferBelow = 3;
     const maxSafePosition =
       totalCopies * totalHeight - itemsBufferBelow * itemHeight;
-    while (targetPosition > maxSafePosition && targetPosition > startPosition + totalHeight) {
+    while (
+      targetPosition > maxSafePosition &&
+      targetPosition > startPosition + totalHeight
+    ) {
       // Reduce by one rotation to stay within safe bounds
       targetPosition -= totalHeight;
     }
@@ -120,7 +126,7 @@ export function useSpinnerAnimation({
     };
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [itemCount, itemHeight, onComplete, cancelAnimation]);
+  }, [itemCount, cancelAnimation, itemHeight, totalCopies, onComplete]);
 
   const reset = useCallback(() => {
     cancelAnimation();
