@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useGameLibrary } from '../../contexts/useGameLibrary';
+import { CheckIcon } from '../icons/CheckIcon';
 import styles from './TagFilter.module.css';
 
 interface TagFilterProps {
@@ -96,16 +97,7 @@ export function TagFilter({ activeFilters, onFiltersChange }: TagFilterProps) {
                     <span
                       className={`${styles.checkmark} ${activeFilters.includes(tag) ? styles.checked : ''}`}
                     >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
+                      <CheckIcon />
                     </span>
                     <span className={styles.tagLabel}>{tag}</span>
                   </label>

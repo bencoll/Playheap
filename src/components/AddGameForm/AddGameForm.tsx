@@ -3,6 +3,8 @@ import type { Game, Platform, HltbData, HltbSearchResult } from '../../types';
 import { PLATFORMS } from '../../types';
 import { useHltbSearch } from '../../hooks/useHltbSearch';
 import { TagSelector } from '../TagSelector';
+import { CloseIcon } from '../icons/CloseIcon';
+import { CheckIcon } from '../icons/CheckIcon';
 import styles from './AddGameForm.module.css';
 
 type Step = 'search' | 'platforms';
@@ -159,18 +161,7 @@ export function AddGameForm({
             onClick={onClose}
             aria-label="Close"
           >
-            <svg
-              className={styles.closeIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <CloseIcon className={styles.closeIcon} />
           </button>
         </div>
 
@@ -313,17 +304,7 @@ export function AddGameForm({
                         onChange={() => handlePlatformToggle(platform.id)}
                         className={styles.checkbox}
                       />
-                      <svg
-                        className={styles.checkIcon}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
+                      <CheckIcon className={styles.checkIcon} />
                       {platform.name}
                     </label>
                   ))}
@@ -373,17 +354,7 @@ export function AddGameForm({
                   className={styles.submitButton}
                   disabled={!title.trim()}
                 >
-                  <svg
-                    className={styles.submitIcon}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+                  <CheckIcon className={styles.submitIcon} strokeWidth={2.5} />
                   {editingGame ? 'Save' : 'Add Game'}
                 </button>
               </div>

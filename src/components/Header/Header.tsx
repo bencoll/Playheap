@@ -1,4 +1,5 @@
 import { TagFilter } from '../TagFilter';
+import { PlusIcon } from '../icons/PlusIcon';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -68,17 +69,7 @@ export function Header({
           Tags
         </button>
         <button className={styles.addButton} onClick={onAddGame}>
-          <svg
-            className={styles.addButtonIcon}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
+          <PlusIcon className={styles.addButtonIcon} />
           Add Game
         </button>
       </div>

@@ -1,6 +1,8 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { useGameLibrary } from '../../contexts/useGameLibrary';
 import { useSpinnerAnimation } from './useSpinnerAnimation';
+import { CloseIcon } from '../icons/CloseIcon';
+import { CheckIcon } from '../icons/CheckIcon';
 import type { Game } from '../../types';
 import styles from './RandomSpinner.module.css';
 
@@ -198,18 +200,7 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
               onClick={handleClose}
               aria-label="Close"
             >
-              <svg
-                className={styles.closeIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <CloseIcon className={styles.closeIcon} />
             </button>
           </div>
           <div className={styles.emptyState}>
@@ -281,18 +272,7 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
             disabled={isSpinning}
             aria-label="Close"
           >
-            <svg
-              className={styles.closeIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <CloseIcon className={styles.closeIcon} />
           </button>
         </div>
 
@@ -331,16 +311,7 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
                   <span
                     className={`${styles.tagCheckmark} ${selectedTags.includes(tag) ? styles.checked : ''}`}
                   >
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                    <CheckIcon />
                   </span>
                   <span className={styles.tagName}>{tag}</span>
                 </label>

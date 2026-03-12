@@ -1,4 +1,5 @@
 import { useGameLibrary } from '../../contexts/useGameLibrary';
+import { CheckIcon } from '../icons/CheckIcon';
 import styles from './TagSelector.module.css';
 
 interface TagSelectorProps {
@@ -35,17 +36,7 @@ export function TagSelector({ selectedTags, onTagsChange }: TagSelectorProps) {
           className={`${styles.tagChip} ${selectedTags.includes(tag) ? styles.selected : ''}`}
           onClick={() => handleTagToggle(tag)}
         >
-          <svg
-            className={styles.checkIcon}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+          <CheckIcon className={styles.checkIcon} />
           {tag}
         </button>
       ))}
