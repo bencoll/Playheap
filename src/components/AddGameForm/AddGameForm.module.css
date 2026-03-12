@@ -1,31 +1,23 @@
 .backdrop {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
+  composes: backdrop from '../../styles/shared.module.css';
   z-index: 100;
   animation: fadeIn 200ms ease-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .modal {
-  width: 100%;
+  composes: modal from '../../styles/shared.module.css';
   max-width: 440px;
   max-height: calc(100vh - var(--space-lg) * 2);
-  margin: var(--space-md);
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  box-shadow:
-    var(--shadow-lg),
-    0 0 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  animation: scaleIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
 .modal::before {
@@ -44,40 +36,19 @@
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  composes: modalHeader from '../../styles/shared.module.css';
 }
 
 .modalTitle {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-text);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  composes: modalTitle from '../../styles/shared.module.css';
 }
 
 .closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  color: var(--color-text-muted);
-  transition: all var(--transition-fast);
-}
-
-.closeButton:hover {
-  background: var(--color-border);
-  color: var(--color-text);
+  composes: closeButton from '../../styles/shared.module.css';
 }
 
 .closeIcon {
-  width: 20px;
-  height: 20px;
+  composes: closeIcon from '../../styles/shared.module.css';
 }
 
 .field {
@@ -96,31 +67,9 @@
 }
 
 .input {
-  width: 100%;
-  padding: var(--space-md);
-  font-family: var(--font-body);
+  composes: formInput from '../../styles/shared.module.css';
   font-size: 15px;
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-bg-card);
-  transition: all var(--transition-fast);
-}
-
-.input:hover {
-  border-color: var(--color-border-hover);
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow:
-    0 0 0 3px var(--color-accent-subtle),
-    0 0 20px var(--color-accent-glow);
-}
-
-.input::placeholder {
-  color: var(--color-text-dim);
+  padding: var(--space-md);
 }
 
 .textarea {
@@ -249,47 +198,15 @@
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-sm);
-  padding: var(--space-lg);
-  background: var(--color-bg-column);
-  border-top: 1px solid var(--color-border);
-  margin-top: var(--space-sm);
+  composes: actionsBar from '../../styles/shared.module.css';
 }
 
 .cancelButton {
-  padding: var(--space-sm) var(--space-lg);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-muted);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-}
-
-.cancelButton:hover {
-  background: var(--color-border);
-  color: var(--color-text);
+  composes: secondaryButton from '../../styles/shared.module.css';
 }
 
 .submitButton {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-bg);
-  background: linear-gradient(135deg, var(--color-accent) 0%, #0099cc 100%);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 12px var(--color-accent-glow);
-  transition: all var(--transition-normal);
+  composes: primaryButton from '../../styles/shared.module.css';
   position: relative;
   overflow: hidden;
 }
@@ -308,20 +225,8 @@
   transition: transform 0.5s ease;
 }
 
-.submitButton:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--color-accent-glow);
-}
-
 .submitButton:hover:not(:disabled)::before {
   transform: translateX(100%);
-}
-
-.submitButton:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
 .submitIcon {
@@ -338,6 +243,7 @@
 }
 
 .searchResults {
+  composes: customScrollbar from '../../styles/shared.module.css';
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-sm);
@@ -346,24 +252,6 @@
   overflow-y: auto;
   padding-top: var(--space-xs);
   padding-right: var(--space-xs);
-}
-
-.searchResults::-webkit-scrollbar {
-  width: 6px;
-}
-
-.searchResults::-webkit-scrollbar-track {
-  background: var(--color-bg-column);
-  border-radius: 3px;
-}
-
-.searchResults::-webkit-scrollbar-thumb {
-  background: var(--color-border-hover);
-  border-radius: 3px;
-}
-
-.searchResults::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
 }
 
 .resultItem {
@@ -553,19 +441,6 @@
 
 /* Back Button */
 .backButton {
-  padding: var(--space-sm) var(--space-lg);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-muted);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  composes: secondaryButton from '../../styles/shared.module.css';
   margin-right: auto;
-}
-
-.backButton:hover {
-  background: var(--color-border);
-  color: var(--color-text);
 }

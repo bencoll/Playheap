@@ -1,37 +1,16 @@
 .backdrop {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  composes: backdrop from '../../styles/shared.module.css';
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(12px);
-  z-index: 200;
-  animation: fadeIn 150ms ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .modal {
-  width: 100%;
+  composes: modal from '../../styles/shared.module.css';
   max-width: 420px;
-  margin: var(--space-md);
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  overflow: hidden;
   box-shadow:
     var(--shadow-lg),
     0 0 80px rgba(0, 212, 255, 0.15);
-  animation: scaleIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  overflow: hidden;
 }
 
 .modal::before {
@@ -62,22 +41,8 @@
   }
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  composes: modalHeader from '../../styles/shared.module.css';
 }
 
 .title {
@@ -99,24 +64,11 @@
 }
 
 .closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  color: var(--color-text-muted);
-  transition: all var(--transition-fast);
-}
-
-.closeButton:hover {
-  background: var(--color-border);
-  color: var(--color-text);
+  composes: closeButton from '../../styles/shared.module.css';
 }
 
 .closeIcon {
-  width: 20px;
-  height: 20px;
+  composes: closeIcon from '../../styles/shared.module.css';
 }
 
 .wheelContainer {
@@ -315,23 +267,11 @@
 }
 
 .acceptButton {
+  composes: primaryButton from '../../styles/shared.module.css';
   flex: 1;
   padding: var(--space-md) var(--space-lg);
-  font-family: var(--font-display);
   font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-bg);
-  background: linear-gradient(135deg, var(--color-accent) 0%, #0099cc 100%);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 12px var(--color-accent-glow);
-  transition: all var(--transition-normal);
-}
-
-.acceptButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--color-accent-glow);
 }
 
 .spinAgainButton {
@@ -355,22 +295,10 @@
 }
 
 .cancelButton {
+  composes: secondaryButton from '../../styles/shared.module.css';
   width: 100%;
   padding: var(--space-sm) var(--space-md);
-  font-family: var(--font-display);
   font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-muted);
-  background: transparent;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-}
-
-.cancelButton:hover {
-  color: var(--color-text);
-  background: var(--color-border);
 }
 
 .emptyState {
@@ -401,20 +329,7 @@
 }
 
 .emptyCloseButton {
-  padding: var(--space-sm) var(--space-lg);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-bg);
-  background: linear-gradient(135deg, var(--color-accent) 0%, #0099cc 100%);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
-}
-
-.emptyCloseButton:hover {
-  transform: translateY(-2px);
+  composes: primaryButton from '../../styles/shared.module.css';
 }
 
 /* Tag filter */

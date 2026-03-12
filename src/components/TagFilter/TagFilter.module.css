@@ -84,27 +84,10 @@
 }
 
 .tagList {
+  composes: customScrollbar from '../../styles/shared.module.css';
   padding: var(--space-sm);
   max-height: 240px;
   overflow-y: auto;
-}
-
-.tagList::-webkit-scrollbar {
-  width: 6px;
-}
-
-.tagList::-webkit-scrollbar-track {
-  background: var(--color-bg-column);
-  border-radius: 3px;
-}
-
-.tagList::-webkit-scrollbar-thumb {
-  background: var(--color-border-hover);
-  border-radius: 3px;
-}
-
-.tagList::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
 }
 
 .tagOption {
