@@ -1,5 +1,5 @@
 import type { Platform } from '../../types';
-import { PLATFORMS } from '../../types';
+import { PLATFORM_MAP } from '../../types';
 import styles from './PlatformBadge.module.css';
 
 interface PlatformBadgeProps {
@@ -7,8 +7,7 @@ interface PlatformBadgeProps {
 }
 
 export function PlatformBadge({ platform }: PlatformBadgeProps) {
-  const config = PLATFORMS.find((p) => p.id === platform);
-  if (!config) return null;
+  const config = PLATFORM_MAP[platform];
 
   return (
     <span className={styles.badge} data-platform={platform}>

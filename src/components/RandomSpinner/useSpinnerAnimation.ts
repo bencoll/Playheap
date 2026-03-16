@@ -2,6 +2,10 @@ import { useRef, useCallback, useState } from 'react';
 
 // Always scroll through at least this many items before landing
 const MIN_ITEMS_TO_SCROLL = 30;
+// Duration of the spin animation in milliseconds
+const SPIN_DURATION_MS = 3000;
+// Minimum items to show above/below the selection point for viewport buffer
+export const MIN_ITEMS_BUFFER = 3;
 
 interface UseSpinnerAnimationProps {
   itemCount: number;
@@ -35,7 +39,7 @@ export function useSpinnerAnimation({
 
   // Start with enough items above to fill the viewport (need ~3 items above center)
   // Use at least 3 items worth of offset, or one full set, whichever is larger
-  const minItemsAbove = 3;
+  const minItemsAbove = MIN_ITEMS_BUFFER;
   const initialPosition = Math.max(
     minItemsAbove * itemHeight,
     itemCount * itemHeight
@@ -81,7 +85,7 @@ export function useSpinnerAnimation({
       startPosition + rotationsForScroll * totalHeight + winnerOffset;
 
     // Ensure we leave room for items below (at least 3 items buffer at the end)
-    const itemsBufferBelow = 3;
+    const itemsBufferBelow = MIN_ITEMS_BUFFER;
     const maxSafePosition =
       totalCopies * totalHeight - itemsBufferBelow * itemHeight;
     while (
@@ -93,7 +97,7 @@ export function useSpinnerAnimation({
     }
 
     // Consistent duration since we're always scrolling similar number of items
-    const duration = 3000;
+    const duration = SPIN_DURATION_MS;
 
     startTimeRef.current = 0;
     setIsSpinning(true);
@@ -126,11 +130,18 @@ export function useSpinnerAnimation({
     };
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [itemCount, cancelAnimation, itemHeight, totalCopies, onComplete]);
+  }, [
+    itemCount,
+    cancelAnimation,
+    itemHeight,
+    minItemsAbove,
+    totalCopies,
+    onComplete,
+  ]);
 
   const reset = useCallback(() => {
     cancelAnimation();
-    const minAbove = 3;
+    const minAbove = MIN_ITEMS_BUFFER;
     setPosition(Math.max(minAbove * itemHeight, itemCount * itemHeight));
     setIsSpinning(false);
   }, [cancelAnimation, itemCount, itemHeight]);

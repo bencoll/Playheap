@@ -62,6 +62,10 @@ export const PLATFORMS: PlatformConfig[] = [
   { id: 'vr', name: 'VR', color: '#E5F5E8', textColor: '#16a34a' },
 ];
 
+export const PLATFORM_MAP: Record<Platform, PlatformConfig> = Object.fromEntries(
+  PLATFORMS.map((p) => [p.id, p])
+) as Record<Platform, PlatformConfig>;
+
 export const COLUMN_CONFIG: { id: ColumnId; title: string }[] = [
   { id: 'backlog', title: 'Backlog' },
   { id: 'up-next', title: 'Up Next' },

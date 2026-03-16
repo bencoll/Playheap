@@ -9,6 +9,8 @@ import styles from './AddGameForm.module.css';
 
 type Step = 'search' | 'platforms';
 
+const MAX_SEARCH_RESULTS = 6;
+
 interface AddGameFormProps {
   isOpen: boolean;
   onClose: () => void;
@@ -231,7 +233,7 @@ export function AddGameForm({
               ) : results.length > 0 ? (
                 <>
                   <div className={styles.searchResults}>
-                    {results.slice(0, 6).map((result) => (
+                    {results.slice(0, MAX_SEARCH_RESULTS).map((result) => (
                       <button
                         key={result.id}
                         type="button"

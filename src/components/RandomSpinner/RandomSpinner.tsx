@@ -1,8 +1,10 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { useGameLibrary } from '../../contexts/useGameLibrary';
-import { useSpinnerAnimation } from './useSpinnerAnimation';
+import { useSpinnerAnimation, MIN_ITEMS_BUFFER } from './useSpinnerAnimation';
+import { SpinnerTagFilter } from './SpinnerTagFilter';
+import { SpinnerWheel } from './SpinnerWheel';
+import { SpinnerActions } from './SpinnerActions';
 import { CloseIcon } from '../icons/CloseIcon';
-import { CheckIcon } from '../icons/CheckIcon';
 import type { Game } from '../../types';
 import styles from './RandomSpinner.module.css';
 
@@ -12,6 +14,7 @@ interface RandomSpinnerProps {
 }
 
 const ITEM_HEIGHT = 70;
+const VIEWPORT_HEIGHT = 280;
 
 export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
   const { state, moveGame } = useGameLibrary();
@@ -232,13 +235,13 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
   }
 
   const extendedGamesList = Array(totalCopies).fill(backlogGames).flat();
-  const centerOffset = 280 / 2 - ITEM_HEIGHT / 2;
+  const centerOffset = VIEWPORT_HEIGHT / 2 - ITEM_HEIGHT / 2;
 
   // Ensure position is valid for the current list size to prevent blank areas
   const totalHeight = backlogGames.length * ITEM_HEIGHT;
   const maxValidPosition = totalHeight * (totalCopies - 1);
   // Use same initial position calculation as the hook: at least 3 items above
-  const minItemsAbove = 3;
+  const minItemsAbove = MIN_ITEMS_BUFFER;
   const defaultPosition = Math.max(minItemsAbove * ITEM_HEIGHT, totalHeight);
   const safePosition =
     totalHeight > 0 && position > maxValidPosition ? defaultPosition : position;
@@ -276,134 +279,31 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
           </button>
         </div>
 
-        {availableTags.length > 0 && (
-          <div className={styles.tagFilter}>
-            <div className={styles.tagFilterHeader}>
-              <span className={styles.tagFilterLabel}>Filter by tags:</span>
-              <div className={styles.tagFilterActions}>
-                <button
-                  type="button"
-                  className={styles.tagFilterAction}
-                  onClick={handleSelectAllTags}
-                  disabled={selectedTags.length === availableTags.length}
-                >
-                  All
-                </button>
-                <button
-                  type="button"
-                  className={styles.tagFilterAction}
-                  onClick={handleDeselectAllTags}
-                  disabled={selectedTags.length === 0}
-                >
-                  None
-                </button>
-              </div>
-            </div>
-            <div className={styles.tagList}>
-              {availableTags.map((tag) => (
-                <label key={tag} className={styles.tagOption}>
-                  <input
-                    type="checkbox"
-                    checked={selectedTags.includes(tag)}
-                    onChange={() => handleTagToggle(tag)}
-                    className={styles.tagCheckbox}
-                  />
-                  <span
-                    className={`${styles.tagCheckmark} ${selectedTags.includes(tag) ? styles.checked : ''}`}
-                  >
-                    <CheckIcon />
-                  </span>
-                  <span className={styles.tagName}>{tag}</span>
-                </label>
-              ))}
-            </div>
-            <div className={styles.eligibleCount}>
-              {backlogGames.length} game{backlogGames.length !== 1 ? 's' : ''}{' '}
-              eligible
-            </div>
-          </div>
-        )}
+        <SpinnerTagFilter
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          eligibleCount={backlogGames.length}
+          onTagToggle={handleTagToggle}
+          onSelectAll={handleSelectAllTags}
+          onDeselectAll={handleDeselectAllTags}
+        />
 
-        <div
-          className={`${styles.wheelContainer} ${winner ? styles.winner : ''} ${hasNoFilteredGames ? styles.noGames : ''}`}
-        >
-          <div className={styles.pointer} />
-          <div className={styles.pointerRight} />
-          <div className={styles.selectionLine} />
-          <div
-            className={styles.wheel}
-            style={{
-              transform: `translateY(${centerOffset - safePosition}px)`,
-            }}
-          >
-            {extendedGamesList.map((game, index) => (
-              <div key={`${game.id}-${index}`} className={styles.gameItem}>
-                {game.hltb?.imageUrl ? (
-                  <img
-                    src={game.hltb.imageUrl}
-                    alt=""
-                    className={styles.gameImage}
-                  />
-                ) : (
-                  <div className={styles.gameImagePlaceholder}>
-                    <svg
-                      className={styles.placeholderIcon}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="2" y="6" width="20" height="12" rx="2" />
-                      <path d="M6 12h.01M10 12h.01" />
-                      <path d="M14 10v4M18 10v4M16 12h4" />
-                    </svg>
-                  </div>
-                )}
-                <span className={styles.gameTitle}>{game.title}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SpinnerWheel
+          games={extendedGamesList}
+          winner={winner}
+          hasNoFilteredGames={hasNoFilteredGames}
+          translateY={centerOffset - safePosition}
+        />
 
-        <div className={styles.actions}>
-          {!hasSpun ? (
-            <button
-              className={styles.spinButton}
-              onClick={handleSpin}
-              disabled={isSpinning || hasNoFilteredGames}
-            >
-              {isSpinning
-                ? 'Spinning...'
-                : hasNoFilteredGames
-                  ? 'No Games Match'
-                  : 'Spin!'}
-            </button>
-          ) : (
-            <>
-              <div className={styles.resultActions}>
-                <button className={styles.acceptButton} onClick={handleAccept}>
-                  Let's Play!
-                </button>
-                <button
-                  className={styles.spinAgainButton}
-                  onClick={handleSpinAgain}
-                  disabled={isSpinning}
-                >
-                  Spin Again
-                </button>
-              </div>
-            </>
-          )}
-          <button
-            className={styles.cancelButton}
-            onClick={handleClose}
-            disabled={isSpinning}
-          >
-            Cancel
-          </button>
-        </div>
+        <SpinnerActions
+          hasSpun={hasSpun}
+          isSpinning={isSpinning}
+          hasNoFilteredGames={hasNoFilteredGames}
+          onSpin={handleSpin}
+          onAccept={handleAccept}
+          onSpinAgain={handleSpinAgain}
+          onClose={handleClose}
+        />
 
         {winner && (
           <div aria-live="polite" className="sr-only">
