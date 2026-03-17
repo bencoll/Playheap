@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import type { Game, Platform, HltbData, HltbSearchResult } from '../../types';
-import { PLATFORMS } from '../../types';
 import { useHltbSearch } from '../../hooks/useHltbSearch';
-import { TagSelector } from '../TagSelector';
 import { CloseIcon } from '../icons/CloseIcon';
-import { CheckIcon } from '../icons/CheckIcon';
+import { GameSearchStep } from './GameSearchStep';
+import { PlatformSelectStep } from './PlatformSelectStep';
 import styles from './AddGameForm.module.css';
 
 type Step = 'search' | 'platforms';
-
-const MAX_SEARCH_RESULTS = 6;
 
 interface AddGameFormProps {
   isOpen: boolean;
@@ -145,8 +142,6 @@ export function AddGameForm({
 
   if (!isOpen) return null;
 
-  const showSearchResults = step === 'search' && title.trim().length > 0;
-
   return (
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
@@ -222,145 +217,29 @@ export function AddGameForm({
             />
           </div>
 
-          {/* Search results */}
-          {showSearchResults && (
-            <div className={styles.searchResultsSection}>
-              {isLoading ? (
-                <div className={styles.loadingSpinner}>
-                  <div className={styles.spinner} />
-                  <span>Searching...</span>
-                </div>
-              ) : results.length > 0 ? (
-                <>
-                  <div className={styles.searchResults}>
-                    {results.slice(0, MAX_SEARCH_RESULTS).map((result) => (
-                      <button
-                        key={result.id}
-                        type="button"
-                        className={styles.resultItem}
-                        onClick={() => handleSelectResult(result)}
-                      >
-                        {result.imageUrl && (
-                          <img
-                            src={result.imageUrl}
-                            alt={result.name}
-                            className={styles.resultImage}
-                            loading="lazy"
-                          />
-                        )}
-                        <div className={styles.resultInfo}>
-                          <span className={styles.resultTitle}>
-                            {result.name}
-                          </span>
-                          {result.gameplayMain > 0 && (
-                            <span className={styles.resultHours}>
-                              {Math.floor(result.gameplayMain / 3600)}h main
-                            </span>
-                          )}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                  <button
-                    type="button"
-                    className={styles.skipButton}
-                    onClick={handleSkip}
-                  >
-                    Skip &mdash; add without image
-                  </button>
-                </>
-              ) : title.trim().length > 2 ? (
-                <div className={styles.noResults}>
-                  <p>No games found</p>
-                  <button
-                    type="button"
-                    className={styles.skipButton}
-                    onClick={handleSkip}
-                  >
-                    Continue without image
-                  </button>
-                </div>
-              ) : null}
-            </div>
+          {step === 'search' && (
+            <GameSearchStep
+              title={title}
+              results={results}
+              isLoading={isLoading}
+              onSelectResult={handleSelectResult}
+              onSkip={handleSkip}
+            />
           )}
 
-          {/* Platforms step */}
           {step === 'platforms' && (
-            <>
-              <div className={styles.field}>
-                <label className={styles.label}>Platforms</label>
-                <div className={styles.platforms}>
-                  {PLATFORMS.map((platform) => (
-                    <label
-                      key={platform.id}
-                      data-platform={platform.id}
-                      className={`${styles.platformCheckbox} ${
-                        selectedPlatforms.includes(platform.id)
-                          ? styles.selected
-                          : ''
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedPlatforms.includes(platform.id)}
-                        onChange={() => handlePlatformToggle(platform.id)}
-                        className={styles.checkbox}
-                      />
-                      <CheckIcon className={styles.checkIcon} />
-                      {platform.name}
-                    </label>
-                  ))}
-                </div>
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Tags</label>
-                <TagSelector
-                  selectedTags={selectedTags}
-                  onTagsChange={setSelectedTags}
-                />
-              </div>
-              {editingGame && (
-                <div className={styles.field}>
-                  <label htmlFor="gameNotes" className={styles.label}>
-                    Notes
-                  </label>
-                  <textarea
-                    id="gameNotes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className={styles.textarea}
-                    placeholder="Add notes about this game..."
-                    rows={4}
-                  />
-                </div>
-              )}
-              <div className={styles.actions}>
-                {!editingGame && (
-                  <button
-                    type="button"
-                    className={styles.backButton}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className={styles.cancelButton}
-                  onClick={onClose}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                  disabled={!title.trim()}
-                >
-                  <CheckIcon className={styles.submitIcon} strokeWidth={2.5} />
-                  {editingGame ? 'Save' : 'Add Game'}
-                </button>
-              </div>
-            </>
+            <PlatformSelectStep
+              selectedPlatforms={selectedPlatforms}
+              onPlatformToggle={handlePlatformToggle}
+              selectedTags={selectedTags}
+              onTagsChange={setSelectedTags}
+              notes={notes}
+              onNotesChange={setNotes}
+              isEditing={!!editingGame}
+              titleValid={!!title.trim()}
+              onBack={handleBack}
+              onCancel={onClose}
+            />
           )}
         </form>
       </div>
