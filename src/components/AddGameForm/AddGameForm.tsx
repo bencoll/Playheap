@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Game, Platform, HltbData, HltbSearchResult } from '../../types';
 import { useHltbSearch } from '../../hooks/useHltbSearch';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { CloseIcon } from '../icons/CloseIcon';
 import { GameSearchStep } from './GameSearchStep';
 import { PlatformSelectStep } from './PlatformSelectStep';
@@ -50,6 +51,7 @@ export function AddGameForm({
   const [notes, setNotes] = useState(editingGame?.notes ?? '');
 
   const { results, isLoading, search, clearResults } = useHltbSearch();
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(isOpen);
 
   const handleTitleChange = (value: string) => {
     setTitle(value);
@@ -143,10 +145,10 @@ export function AddGameForm({
   if (!isOpen) return null;
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.modal}>
+    <div className={styles.backdrop} onClick={handleBackdropClick} ref={focusTrapRef}>
+      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="add-game-title">
         <div className={styles.header}>
-          <h2 className={styles.modalTitle}>
+          <h2 id="add-game-title" className={styles.modalTitle}>
             {editingGame
               ? 'Edit Game'
               : step === 'search'

@@ -59,6 +59,7 @@ export function TagFilter({ activeFilters, onFiltersChange }: TagFilterProps) {
         className={`${styles.filterButton} ${hasActiveFilters ? styles.active : ''}`}
         onClick={handleToggle}
         aria-expanded={isOpen}
+        aria-haspopup="listbox"
       >
         <svg
           className={styles.filterIcon}

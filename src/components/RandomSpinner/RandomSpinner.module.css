@@ -510,3 +510,28 @@
     animation: none;
   }
 }
+
+/* Responsive: mobile */
+@media (max-width: 480px) {
+  .modal {
+    max-width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  .wheelContainer {
+    margin: 0 var(--space-md);
+  }
+
+  .tagFilter {
+    margin: 0 var(--space-md) var(--space-md);
+  }
+
+  .actions {
+    padding: var(--space-md);
+  }
+
+  .gameTitle {
+    max-width: 180px;
+    font-size: 14px;
+  }
+}

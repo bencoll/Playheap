@@ -444,3 +444,15 @@
   composes: secondaryButton from '../../styles/shared.module.css';
   margin-right: auto;
 }
+
+/* Responsive: mobile */
+@media (max-width: 480px) {
+  .modal {
+    max-height: none;
+  }
+
+  .searchResults {
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 260px;
+  }
+}

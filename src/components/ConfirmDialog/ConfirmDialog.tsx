@@ -1,3 +1,4 @@
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import styles from './ConfirmDialog.module.css';
 
 interface ConfirmDialogProps {
@@ -19,6 +20,8 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(isOpen);
+
   if (!isOpen) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -28,10 +31,10 @@ export function ConfirmDialog({
   };
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.dialog}>
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.message}>{message}</p>
+    <div className={styles.backdrop} onClick={handleBackdropClick} ref={focusTrapRef}>
+      <div className={styles.dialog} role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+        <h2 id="confirm-title" className={styles.title}>{title}</h2>
+        <p id="confirm-message" className={styles.message}>{message}</p>
         <div className={styles.actions}>
           <button
             type="button"

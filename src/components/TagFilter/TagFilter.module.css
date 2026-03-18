@@ -167,3 +167,12 @@
   color: var(--color-accent);
   background: var(--color-bg-elevated);
 }
+
+/* Responsive: mobile — prevent dropdown clipping off left edge */
+@media (max-width: 480px) {
+  .dropdown {
+    right: auto;
+    left: 0;
+    min-width: 180px;
+  }
+}

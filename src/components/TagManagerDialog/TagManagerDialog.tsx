@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useGameLibrary } from '../../contexts/useGameLibrary';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { CloseIcon } from '../icons/CloseIcon';
 import { PlusIcon } from '../icons/PlusIcon';
 import styles from './TagManagerDialog.module.css';
@@ -13,6 +14,7 @@ export function TagManagerDialog({ isOpen, onClose }: TagManagerDialogProps) {
   const { state, addTag, deleteTag } = useGameLibrary();
   const [newTagName, setNewTagName] = useState('');
   const availableTags = state.tags || [];
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(isOpen);
 
   const handleAddTag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +33,10 @@ export function TagManagerDialog({ isOpen, onClose }: TagManagerDialogProps) {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.dialog}>
+    <div className={styles.backdrop} onClick={handleBackdropClick} ref={focusTrapRef}>
+      <div className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="tag-manager-title">
         <div className={styles.header}>
-          <h2 className={styles.title}>Manage Tags</h2>
+          <h2 id="tag-manager-title" className={styles.title}>Manage Tags</h2>
           <button
             className={styles.closeButton}
             onClick={onClose}
@@ -51,6 +53,7 @@ export function TagManagerDialog({ isOpen, onClose }: TagManagerDialogProps) {
             onChange={(e) => setNewTagName(e.target.value)}
             placeholder="Enter tag name..."
             className={styles.input}
+            aria-label="New tag name"
             autoFocus
           />
           <button

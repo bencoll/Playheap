@@ -109,6 +109,11 @@
   --font-display: 'Chakra Petch', sans-serif;
   --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
+  /* Breakpoints (reference values — use in media queries directly) */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+
   /* CRT scanline effect */
   --scanline-opacity: 0.03;
 }

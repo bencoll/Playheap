@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { useGameLibrary } from '../../contexts/useGameLibrary';
 import { useSpinnerAnimation, MIN_ITEMS_BUFFER } from './useSpinnerAnimation';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { SpinnerTagFilter } from './SpinnerTagFilter';
 import { SpinnerWheel } from './SpinnerWheel';
 import { SpinnerActions } from './SpinnerActions';
@@ -22,6 +23,7 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
   const [hasSpun, setHasSpun] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const prevIsOpenRef = useRef(isOpen);
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(isOpen);
 
   const availableTags = useMemo(() => state.tags || [], [state.tags]);
 
@@ -179,10 +181,10 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
 
   if (hasNoBacklogGames) {
     return (
-      <div className={styles.backdrop} onClick={handleBackdropClick}>
-        <div className={styles.modal} role="dialog" aria-modal="true">
+      <div className={styles.backdrop} onClick={handleBackdropClick} ref={focusTrapRef}>
+        <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="spinner-title-empty">
           <div className={styles.header}>
-            <h2 className={styles.title}>
+            <h2 id="spinner-title-empty" className={styles.title}>
               <svg
                 className={styles.titleIcon}
                 viewBox="0 0 24 24"
@@ -247,10 +249,10 @@ export function RandomSpinner({ isOpen, onClose }: RandomSpinnerProps) {
     totalHeight > 0 && position > maxValidPosition ? defaultPosition : position;
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.modal} role="dialog" aria-modal="true">
+    <div className={styles.backdrop} onClick={handleBackdropClick} ref={focusTrapRef}>
+      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="spinner-title">
         <div className={styles.header}>
-          <h2 className={styles.title}>
+          <h2 id="spinner-title" className={styles.title}>
             <svg
               className={styles.titleIcon}
               viewBox="0 0 24 24"

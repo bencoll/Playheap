@@ -203,3 +203,14 @@
   color: var(--color-text-muted);
   opacity: 0.7;
 }
+
+/* Responsive: mobile */
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-sm);
+  }
+
+  .actions {
+    opacity: 1;
+  }
+}
