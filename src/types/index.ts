@@ -9,21 +9,14 @@ export interface PlatformConfig {
   textColor: string;
 }
 
+export type { HltbSearchResult } from '../../lib/hltb-api';
+
 export interface HltbData {
   hltbId: string;
   imageUrl: string;
   gameplayMain?: number;
   gameplayMainExtra?: number;
   gameplayCompletionist?: number;
-}
-
-export interface HltbSearchResult {
-  id: string;
-  name: string;
-  imageUrl: string;
-  gameplayMain: number;
-  gameplayMainExtra: number;
-  gameplayCompletionist: number;
 }
 
 export interface Game {
