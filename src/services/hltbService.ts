@@ -12,13 +12,7 @@ function getSearchUrl(query: string): string {
 }
 
 export async function searchGames(query: string): Promise<HltbSearchResult[]> {
-  const headers: Record<string, string> = {};
-
-  if (!import.meta.env.DEV) {
-    headers['apikey'] = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
-  }
-
-  const response = await fetch(getSearchUrl(query), { headers });
+  const response = await fetch(getSearchUrl(query));
 
   if (!response.ok) {
     throw new Error('Failed to search HLTB');
