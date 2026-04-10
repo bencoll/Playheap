@@ -7,7 +7,7 @@ interface PlatformBadgeProps {
 }
 
 export function PlatformBadge({ platform }: PlatformBadgeProps) {
-  const config = PLATFORM_MAP[platform];
+  const config = PLATFORM_MAP[platform] ?? { ...PLATFORM_MAP['default'], id: platform, name: platform };
 
   return (
     <span className={styles.badge} data-platform={platform}>
