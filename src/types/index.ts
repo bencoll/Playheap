@@ -43,6 +43,13 @@ export interface GameLibraryState {
   tags: string[];
 }
 
+export const DEFAULT_PLATFORM: PlatformConfig = {
+  id: 'default',
+  name: 'Unknown',
+  color: '#E5E7EB',
+  textColor: '#374151',
+};
+
 export const PLATFORMS: PlatformConfig[] = [
   { id: 'switch', name: 'Switch', color: '#FFE5E5', textColor: '#E60012' },
   {
@@ -53,11 +60,10 @@ export const PLATFORMS: PlatformConfig[] = [
   },
   { id: 'steam', name: 'Steam', color: '#E5EEF5', textColor: '#1B2838' },
   { id: 'vr', name: 'VR', color: '#E5F5E8', textColor: '#16a34a' },
-  { id: 'default', name: 'Unknown', color: '#E5E7EB', textColor: '#374151' },
 ];
 
 export const PLATFORM_MAP: Record<string, PlatformConfig> = Object.fromEntries(
-  PLATFORMS.map((p) => [p.id, p])
+  [...PLATFORMS, DEFAULT_PLATFORM].map((p) => [p.id, p])
 );
 
 export const COLUMN_CONFIG: { id: ColumnId; title: string }[] = [
