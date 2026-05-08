@@ -1,5 +1,5 @@
 const HLTB_BASE_URL = 'https://howlongtobeat.com';
-const HLTB_API_URL = `${HLTB_BASE_URL}/api/find`;
+const HLTB_API_URL = `${HLTB_BASE_URL}/api/bleed`;
 const HLTB_INIT_URL = `${HLTB_API_URL}/init`;
 const HLTB_REFERER = `${HLTB_BASE_URL}/`;
 
@@ -50,9 +50,7 @@ async function getAuthData(): Promise<HltbAuthData> {
   return { token: String(token), hpKey: String(hpKey), hpVal: String(hpVal) };
 }
 
-export async function searchHltb(
-  query: string
-): Promise<HltbSearchResult[]> {
+export async function searchHltb(query: string): Promise<HltbSearchResult[]> {
   const { token, hpKey, hpVal } = await getAuthData();
 
   const payload: Record<string, unknown> = {
