@@ -1,0 +1,1 @@
+export { SignedOutPlaceholder } from './SignedOutPlaceholder';

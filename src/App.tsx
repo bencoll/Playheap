@@ -7,14 +7,22 @@ import { TagManagerDialog } from './components/TagManagerDialog';
 import { RandomSpinner } from './components/RandomSpinner';
 import { LoginDialog } from './components/LoginDialog';
 import { PasswordResetDialog } from './components/PasswordResetDialog';
+import { SignedOutPlaceholder } from './components/SignedOutPlaceholder';
+import { LoadingScreen } from './components/LoadingScreen';
 import { useAuth } from './contexts/useAuth';
 import { useGameLibrary } from './contexts/useGameLibrary';
 import type { Game, Platform, HltbData } from './types';
 import styles from './App.module.css';
 
 function App() {
-  const { state, addGame, updateGame, deleteGame } = useGameLibrary();
-  const { inPasswordRecovery, clearPasswordRecovery } = useAuth();
+  const { state, addGame, updateGame, deleteGame, loading: libraryLoading } =
+    useGameLibrary();
+  const {
+    user,
+    loading: authLoading,
+    inPasswordRecovery,
+    clearPasswordRecovery,
+  } = useAuth();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -79,6 +87,30 @@ function App() {
     setEditingGame(null);
   };
 
+  if (authLoading) {
+    return (
+      <div className={styles.app}>
+        <LoadingScreen />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className={styles.app}>
+        <SignedOutPlaceholder onOpenLogin={() => setIsLoginOpen(true)} />
+        <LoginDialog
+          isOpen={isLoginOpen}
+          onClose={() => setIsLoginOpen(false)}
+        />
+        <PasswordResetDialog
+          isOpen={inPasswordRecovery}
+          onClose={clearPasswordRecovery}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.app}>
       <Header
@@ -89,11 +121,15 @@ function App() {
         activeTagFilters={activeTagFilters}
         onTagFiltersChange={setActiveTagFilters}
       />
-      <Board
-        onEditGame={handleEditGame}
-        onDeleteGame={handleDeleteGame}
-        activeTagFilters={activeTagFilters}
-      />
+      {libraryLoading ? (
+        <LoadingScreen />
+      ) : (
+        <Board
+          onEditGame={handleEditGame}
+          onDeleteGame={handleDeleteGame}
+          activeTagFilters={activeTagFilters}
+        />
+      )}
       <AddGameForm
         key={editingGame?.id ?? `new-${formKey}`}
         isOpen={isFormOpen}

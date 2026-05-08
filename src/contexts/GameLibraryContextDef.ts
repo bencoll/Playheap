@@ -9,6 +9,8 @@ import type {
 
 export interface GameLibraryContextValue {
   state: GameLibraryState;
+  loading: boolean;
+  error: string | null;
   addGame: (
     title: string,
     platforms: Platform[],
