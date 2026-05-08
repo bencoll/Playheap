@@ -164,86 +164,88 @@ export function AddGameForm({
           </button>
         </div>
 
-        {/* Edit mode image preview */}
-        {editingGame && step === 'platforms' && !isChangingImage && (
-          <div className={styles.imagePreviewSection}>
-            {selectedHltb?.imageUrl ? (
-              <>
-                <img
-                  src={selectedHltb.imageUrl}
-                  alt={title}
-                  className={styles.previewImage}
-                />
-                <div className={styles.imageActions}>
-                  <button
-                    type="button"
-                    className={styles.changeImageButton}
-                    onClick={handleChangeImage}
-                  >
-                    Change Image
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.removeImageButton}
-                    onClick={handleRemoveImage}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </>
-            ) : (
-              <button
-                type="button"
-                className={styles.addImageButton}
-                onClick={handleChangeImage}
-              >
-                + Add Image
-              </button>
+        <div className={styles.body}>
+          {/* Edit mode image preview */}
+          {editingGame && step === 'platforms' && !isChangingImage && (
+            <div className={styles.imagePreviewSection}>
+              {selectedHltb?.imageUrl ? (
+                <>
+                  <img
+                    src={selectedHltb.imageUrl}
+                    alt={title}
+                    className={styles.previewImage}
+                  />
+                  <div className={styles.imageActions}>
+                    <button
+                      type="button"
+                      className={styles.changeImageButton}
+                      onClick={handleChangeImage}
+                    >
+                      Change Image
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.removeImageButton}
+                      onClick={handleRemoveImage}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.addImageButton}
+                  onClick={handleChangeImage}
+                >
+                  + Add Image
+                </button>
+              )}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div className={styles.field}>
+              <label htmlFor="gameTitle" className={styles.label}>
+                Title
+              </label>
+              <input
+                id="gameTitle"
+                type="text"
+                value={title}
+                onChange={(e) => handleTitleChange(e.target.value)}
+                className={styles.input}
+                placeholder="Enter game title..."
+                autoFocus
+              />
+            </div>
+
+            {step === 'search' && (
+              <GameSearchStep
+                title={title}
+                results={results}
+                isLoading={isLoading}
+                onSelectResult={handleSelectResult}
+                onSkip={handleSkip}
+              />
             )}
-          </div>
-        )}
 
-        <form onSubmit={handleSubmit}>
-          <div className={styles.field}>
-            <label htmlFor="gameTitle" className={styles.label}>
-              Title
-            </label>
-            <input
-              id="gameTitle"
-              type="text"
-              value={title}
-              onChange={(e) => handleTitleChange(e.target.value)}
-              className={styles.input}
-              placeholder="Enter game title..."
-              autoFocus
-            />
-          </div>
-
-          {step === 'search' && (
-            <GameSearchStep
-              title={title}
-              results={results}
-              isLoading={isLoading}
-              onSelectResult={handleSelectResult}
-              onSkip={handleSkip}
-            />
-          )}
-
-          {step === 'platforms' && (
-            <PlatformSelectStep
-              selectedPlatforms={selectedPlatforms}
-              onPlatformToggle={handlePlatformToggle}
-              selectedTags={selectedTags}
-              onTagsChange={setSelectedTags}
-              notes={notes}
-              onNotesChange={setNotes}
-              isEditing={!!editingGame}
-              titleValid={!!title.trim()}
-              onBack={handleBack}
-              onCancel={onClose}
-            />
-          )}
-        </form>
+            {step === 'platforms' && (
+              <PlatformSelectStep
+                selectedPlatforms={selectedPlatforms}
+                onPlatformToggle={handlePlatformToggle}
+                selectedTags={selectedTags}
+                onTagsChange={setSelectedTags}
+                notes={notes}
+                onNotesChange={setNotes}
+                isEditing={!!editingGame}
+                titleValid={!!title.trim()}
+                onBack={handleBack}
+                onCancel={onClose}
+              />
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );
