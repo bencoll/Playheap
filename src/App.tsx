@@ -5,18 +5,23 @@ import { AddGameForm } from './components/AddGameForm';
 import { ConfirmDialog } from './components/ConfirmDialog';
 import { TagManagerDialog } from './components/TagManagerDialog';
 import { RandomSpinner } from './components/RandomSpinner';
+import { LoginDialog } from './components/LoginDialog';
+import { PasswordResetDialog } from './components/PasswordResetDialog';
+import { useAuth } from './contexts/useAuth';
 import { useGameLibrary } from './contexts/useGameLibrary';
 import type { Game, Platform, HltbData } from './types';
 import styles from './App.module.css';
 
 function App() {
   const { state, addGame, updateGame, deleteGame } = useGameLibrary();
+  const { inPasswordRecovery, clearPasswordRecovery } = useAuth();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
   const [formKey, setFormKey] = useState(0);
   const [gameToDelete, setGameToDelete] = useState<string | null>(null);
   const [isTagManagerOpen, setIsTagManagerOpen] = useState(false);
   const [isSpinnerOpen, setIsSpinnerOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [activeTagFilters, setActiveTagFilters] = useState<string[]>([]);
 
   const gameToDeleteTitle = gameToDelete
@@ -80,6 +85,7 @@ function App() {
         onAddGame={handleAddGame}
         onManageTags={() => setIsTagManagerOpen(true)}
         onRandomSpin={() => setIsSpinnerOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
         activeTagFilters={activeTagFilters}
         onTagFiltersChange={setActiveTagFilters}
       />
@@ -112,6 +118,11 @@ function App() {
       <RandomSpinner
         isOpen={isSpinnerOpen}
         onClose={() => setIsSpinnerOpen(false)}
+      />
+      <LoginDialog isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      <PasswordResetDialog
+        isOpen={inPasswordRecovery}
+        onClose={clearPasswordRecovery}
       />
     </div>
   );

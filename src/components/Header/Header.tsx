@@ -1,11 +1,13 @@
 import { TagFilter } from '../TagFilter';
 import { PlusIcon } from '../icons/PlusIcon';
+import { UserMenu } from '../UserMenu';
 import styles from './Header.module.css';
 
 interface HeaderProps {
   onAddGame: () => void;
   onManageTags: () => void;
   onRandomSpin: () => void;
+  onOpenLogin: () => void;
   activeTagFilters: string[];
   onTagFiltersChange: (filters: string[]) => void;
 }
@@ -14,6 +16,7 @@ export function Header({
   onAddGame,
   onManageTags,
   onRandomSpin,
+  onOpenLogin,
   activeTagFilters,
   onTagFiltersChange,
 }: HeaderProps) {
@@ -72,6 +75,7 @@ export function Header({
           <PlusIcon className={styles.addButtonIcon} />
           Add Game
         </button>
+        <UserMenu onOpenLogin={onOpenLogin} />
       </div>
     </header>
   );
